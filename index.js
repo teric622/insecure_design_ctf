@@ -4,7 +4,7 @@ const cookieParser = require("cookie-parser");
 const crypto = require("crypto");
 const app = express();
 
-const FLAG = "CTF{Authorization_Bypass_Success}";
+const FLAG = "CTF{ETM_dont_you_love_cookies_with_milk_yum_yum}";
 const SESSION_EXPIRATION = 3 * 60 * 1000; //duration before expires
 const users = {
   user: { password: "userpass", role: "user" },
