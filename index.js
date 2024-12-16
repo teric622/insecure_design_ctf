@@ -38,6 +38,7 @@ app.get("/", (req, res) => {
       <button type="submit">Login</button>
     </form>
     <!-- When I was a kid, my favorite snack went well with milk. -->
+    <!-- remember KISS is key -->
   `);
 });
 app.post("/login", (req, res) => {
