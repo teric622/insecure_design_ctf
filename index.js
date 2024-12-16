@@ -4,18 +4,13 @@ const cookieParser = require("cookie-parser");
 const crypto = require("crypto");
 const app = express();
 
-// Constants
 const FLAG = "CTF{Authorization_Bypass_Success}";
-const SESSION_EXPIRATION = 3 * 60 * 1000; // 2 minutes
+const SESSION_EXPIRATION = 3 * 60 * 1000; //duration before expires
 const users = {
   user: { password: "userpass", role: "user" },
   admin: { password: "adminpass", role: "admin" },
 };
-
-// In-Memory Store for Session Timestamps
 const sessionStore = new Map();
-
-// Utility Functions
 function encodeHex(str) {
   return Buffer.from(str, "utf8").toString("hex");
 }
@@ -23,13 +18,9 @@ function encodeHex(str) {
 function decodeHex(hex) {
   return Buffer.from(hex, "hex").toString("utf8");
 }
-
 function generateFakeHash() {
-  // Generate a fake MD5 hash (static for this example)
-  return crypto.createHash("md5").update("hello").digest("hex"); // Outputs: 5d41402abc4b2a76b9719d911017c592
+  return crypto.createHash("md5").update("hello").digest("hex");
 }
-
-// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use((req, res, next) => {
@@ -38,8 +29,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-
-// Routes
 app.get("/", (req, res) => {
   res.send(`
     <h1>Login</h1>
@@ -48,10 +37,9 @@ app.get("/", (req, res) => {
       <label>Password:</label><input type="password" name="password" required />
       <button type="submit">Login</button>
     </form>
-    <!-- Ensure your session token is correct to view all features -->
+    <!-- When I was a kid, my favorite snack went well with milk. -->
   `);
 });
-
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   const user = users[username];
@@ -96,8 +84,6 @@ app.get("/admin-panel", (req, res) => {
 app.get("/get-flag", (req, res) => {
   res.status(403).send("Unauthorized request.");
 });
-
-// Start Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
